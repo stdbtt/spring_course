@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Give Book</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/library/books/give}">
+    <label for="customer">Choose person</label>
+    <select th:object="${book}" th:field="*{customer_id}" id="customer">
+        <option th:each="customer : ${customers}" th:value="${customer.getCustomer_id()}"
+                th:text="${customer.getName()}"></option>
+    </select>
+    <label for="book">Choose book</label>
+    <select th:object="${book}" th:field="*{book_id}" id="book">
+        <option th:each="freeBook : ${books}" th:value="${freeBook.getBook_id()}"
+                th:text="${freeBook.getTitle() + ', ' + freeBook.getAuthor()
+                + ', ' + freeBook.getYear()}"></option>
+    </select>
+
+    <input type="submit" value="Give the book to this person"/>
+</form>
+<hr/>
+<p>If there is no needed customer then you can create him.</p>
+<a th:href="@{/library/customers/new}">Create</a>
+
+<hr/>
+<a th:href="@{/library}">Back to main page</a>
+
+</body>
+</html>

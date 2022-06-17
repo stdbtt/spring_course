@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Release book</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/library/books/release}">
+    <label for="book">Choose book</label>
+    <select th:object="${book}" th:field="*{book_id}" id="book">
+        <option th:each="takenBook : ${books}" th:value="${takenBook.getBook_id()}"
+                th:text="${takenBook.getTitle() + ', ' + takenBook.getAuthor()
+                + ', ' + takenBook.getYear()}"></option>
+    </select>
+
+    <input type="submit" value="Release this book"/>
+</form>
+
+<hr/>
+<a th:href="@{/library}">Back to main page</a>
+
+</body>
+</html>

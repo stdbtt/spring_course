@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete customer</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/library/customers/delete}">
+    <label for="customer">Chosse person</label>
+    <select th:object="${customer}" th:field="*{customer_id}" id="customer">
+        <option th:each="customer : ${customers}" th:value="${customer.getCustomer_id()}"
+                th:text="${customer.getName()}"></option>
+    </select>
+    <input type="submit" value="Delete this customer"/>
+</form>
+<hr/>
+<a th:href="@{/library}">Back to main page</a>
+</body>
+</html>
