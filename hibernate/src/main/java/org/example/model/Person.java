@@ -2,17 +2,20 @@ package org.example.model;
 
 import jakarta.persistence.*;
 
-@Entity
-@Table(name="person")
-public class Person {
+import java.util.List;
 
+@Entity
+@Table(name = "person")
+public class Person {
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_id_gen")
-    @SequenceGenerator(name="person_id_gen", sequenceName = "id_gen", allocationSize = 1)
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id;
 
-    @Column(name = "name")
+    @OneToMany(mappedBy = "owner")
+    private List<Item> items;
+
+    @Column(name="name")
     private String name;
 
     @Column(name = "age")
@@ -47,5 +50,22 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
