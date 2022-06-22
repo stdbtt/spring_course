@@ -24,10 +24,6 @@ public class Item {
         this.itemName = itemName;
     }
 
-    public Item(String itemName, Person owner) {
-        this.owner = owner;
-        this.itemName = itemName;
-    }
 
     public int getId() {
         return id;
