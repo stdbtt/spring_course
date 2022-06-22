@@ -18,6 +18,10 @@ public class Item {
     @Column(name = "item_name")
     private String itemName;
 
+    @ManyToOne
+    @JoinColumn(name = "delivery_id", referencedColumnName = "id")
+    private Delivery delivery;
+
     public Item(){}
 
     public Item(String itemName) {
@@ -47,6 +51,14 @@ public class Item {
 
     public void setOwner(Person owner) {
         this.owner = owner;
+    }
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
     }
 
     @Override
