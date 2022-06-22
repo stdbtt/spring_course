@@ -5,25 +5,28 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "person")
-public class Person {
+@Table(name = "Director")
+public class Director {
+
     @Id
-    @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @Column(name="director_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(mappedBy = "owner")
-    private List<Item> items;
 
-    @Column(name="name")
+    @OneToMany(mappedBy = "director")
+    private List<Movie> movies;
+
+    @Column(name = "name")
     private String name;
 
     @Column(name = "age")
     private int age;
 
-    public Person(){}
+    public Director(){}
 
-    public Person(String name, int age) {
+    public Director(List<Movie> movies, String name, int age) {
+        this.movies = movies;
         this.name = name;
         this.age = age;
     }
@@ -34,6 +37,14 @@ public class Person {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 
     public String getName() {
@@ -52,17 +63,11 @@ public class Person {
         this.age = age;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
     @Override
     public String toString() {
-        return "Person{" +
+        StringBuilder builder = new StringBuilder();
+        movies.forEach(builder::append);
+        return "Director{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
