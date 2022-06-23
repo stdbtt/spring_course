@@ -12,7 +12,7 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Item> items;
 
     @Column(name="name")
@@ -62,10 +62,16 @@ public class Person {
 
     @Override
     public String toString() {
+        StringBuilder items = new StringBuilder();
+        for (Item i:
+             this.items) {
+            items.append(i.getName()).append(", ");
+        }
         return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", items: " + items +
                 '}';
     }
 }

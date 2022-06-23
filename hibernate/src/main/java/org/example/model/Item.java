@@ -15,19 +15,15 @@ public class Item {
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person owner;
 
-    @Column(name = "item_name")
-    private String itemName;
+    @Column(name = "name")
+    private String name;
 
     public Item(){}
 
-    public Item(String itemName) {
-        this.itemName = itemName;
+    public Item(String name) {
+        this.name = name;
     }
 
-    public Item(String itemName, Person owner) {
-        this.owner = owner;
-        this.itemName = itemName;
-    }
 
     public int getId() {
         return id;
@@ -37,12 +33,12 @@ public class Item {
         this.id = id;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getName() {
+        return name;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setName(String itemName) {
+        this.name = itemName;
     }
 
     public Person getOwner() {
@@ -50,6 +46,7 @@ public class Item {
     }
 
     public void setOwner(Person owner) {
+        System.out.println("setOwner");
         this.owner = owner;
     }
 
@@ -57,7 +54,8 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "id=" + id +
-                ", itemName='" + itemName + '\'' +
+                ", itemName='" + name + '\'' +
+                ", owner=" + owner.getName()+
                 '}';
     }
 }
