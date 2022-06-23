@@ -3,32 +3,28 @@ package org.example.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name = "person")
-public class Person {
+@Table(name = "Principal")
+public class Principal {
+
     @Id
-    @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "age")
     private int age;
 
-
-    @OneToOne(mappedBy = "person")
+    @OneToOne(mappedBy = "principal")
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Passport passport;
+    private School school;
 
-    public Person(){}
+    public Principal() {
+    }
 
-    public Person(String name, int age) {
+    public Principal(String name, int age) {
         this.name = name;
         this.age = age;
     }
@@ -57,22 +53,21 @@ public class Person {
         this.age = age;
     }
 
-    public Passport getPassport() {
-        return passport;
+    public School getSchool() {
+        return school;
     }
 
-    public void setPassport(Passport passport) {
-        this.passport = passport;
-        passport.setPerson(this);
+    public void setSchool(School school) {
+        this.school = school;
     }
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Principal{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", school=" + school.getSchoolNumber() +
                 '}';
     }
-
 }
