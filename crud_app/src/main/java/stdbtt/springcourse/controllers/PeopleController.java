@@ -1,6 +1,5 @@
 package stdbtt.springcourse.controllers;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import stdbtt.springcourse.dao.PersonDAO;
 import stdbtt.springcourse.models.Person;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/people")
