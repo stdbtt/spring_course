@@ -25,8 +25,9 @@ public class Person {
     @Column(name = "age")
     private int age;
 
-    @OneToMany(mappedBy = "owner")
-    private List<Item> items;
+    @Enumerated(EnumType.STRING)
+    private Mood mood;
+
 
     @Column(name ="date_of_birth")
     @Temporal(TemporalType.DATE)
@@ -70,16 +71,7 @@ public class Person {
         this.name = name;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
 
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-
-
-    }
 
     public Date getDateOfBirth() {
         return dateOfBirth;
@@ -95,6 +87,14 @@ public class Person {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Mood getMood() {
+        return mood;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
     }
 
     @Override
