@@ -32,7 +32,6 @@ public class PeopleService {
 
     @Transactional
     public void save(Person person){
-        person.setCreatedAt(new Date());
         peopleRepository.save(person);
     }
 
