@@ -6,15 +6,15 @@
 </head>
 <body>
 <p th:text="${customer.getName()+', '+ customer.getYearOfBirth()}">VALUE</p>
-<p th:if="${customer.isBooksEmpty()}">
+<p th:if="${customer.getBooks().isEmpty()}">
   Человек пока не взял ни одной книги
 </p>
-<div th:if="${not customer.isBooksEmpty()}">
+<div th:if="${not customer.getBooks().isEmpty()}">
   <hr/>
   <b><label>Книги:</label></b>
   <p th:each="book : ${customer.getBooks()}">
 
-    <span th:style="${book.isTimeOff() ? 'background-color:red, color:white' : 'color:black'}" th:text="${book.getTitle() + ', '
+    <span th:style="${book.isTimeOff() ? 'background-color:red' : 'color:black'}" th:text="${book.getTitle() + ', '
         + book.getAuthor() + ', '
         + book.getYear()}">book</span>
   </p>

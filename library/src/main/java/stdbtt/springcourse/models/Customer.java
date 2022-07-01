@@ -21,16 +21,8 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Book> books;
-
-    @Transient
-    private boolean isBooksEmpty = true;
-
-
-
     public Customer() {
-
     }
-
     public int getId() {
         return id;
     }
@@ -62,16 +54,6 @@ public class Customer {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
-
-    public boolean isBooksEmpty() {
-        return isBooksEmpty;
-    }
-
-    public void setBooksEmpty(boolean booksEmpty) {
-        isBooksEmpty = booksEmpty;
-    }
-
-
 
     @Override
     public String toString() {

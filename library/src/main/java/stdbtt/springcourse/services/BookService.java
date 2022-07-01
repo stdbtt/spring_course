@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import stdbtt.springcourse.models.Book;
+import stdbtt.springcourse.models.Customer;
 import stdbtt.springcourse.repositories.BookRepository;
 import stdbtt.springcourse.repositories.CustomerRepository;
 
@@ -47,11 +48,7 @@ public class BookService {
 
     @Transactional(readOnly = true)
     public Book findOne(int id){
-        Book book = bookRepository.findById(id).orElse(null);
-        if(book != null && book.getCustomer() != null){
-            book.setFree(false);
-        }
-       return book;
+        return bookRepository.findById(id).orElse(null);
     }
 
     @Transactional
@@ -60,8 +57,8 @@ public class BookService {
     }
 
     @Transactional
-    public void assign(Book book){
-        Book bookForDB = findOne(book.getId());
+    public void assign(int id, Customer customer){
+        Book bookForDB = findOne(id);
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
         Date date=null;
         try {
@@ -70,7 +67,7 @@ public class BookService {
             throw new RuntimeException(e);
         }
         bookForDB.setAssignAt(date);
-        bookForDB.setCustomer(customerRepository.findById(book.getCustomerId()).orElse(null));
+        bookForDB.setCustomer(customerRepository.findById(customer.getId()).orElse(null));
     }
 
     @Transactional
@@ -113,12 +110,6 @@ public class BookService {
     }
 
     public List<Book> findBooksStartWith(String request){
-        List<Book> books =  bookRepository.findBooksByTitleStartingWith(request);
-        for(Book book : books){
-            if(book != null && book.getCustomer() != null){
-                book.setFree(false);
-            }
-        }
-        return books;
+        return bookRepository.findBooksByTitleStartingWith(request);
     }
 }

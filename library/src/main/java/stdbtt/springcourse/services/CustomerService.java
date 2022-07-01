@@ -37,7 +37,6 @@ public class CustomerService {
         if(customer!=null){
             List<Book> books = customer.getBooks();
             if(books.size()>0){
-                customer.setBooksEmpty(false);
                 for(Book book : books){
                     checkTimeOff(book);
                 }

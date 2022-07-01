@@ -58,7 +58,6 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     public String delete(Customer customer){
-        System.out.println(customer);
        customerService.delete(customer);
         return "redirect:/customers/";
     }

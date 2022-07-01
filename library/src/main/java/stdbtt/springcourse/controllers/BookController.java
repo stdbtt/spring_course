@@ -30,16 +30,13 @@ public class BookController {
     public String showAll(Model model, @RequestParam(name = "page", required = false) Integer page,
                           @RequestParam(name = "books_per_page", required = false) Integer booksPerPage,
                           @RequestParam(name = "sort_by_year", required = false) Boolean isSortByYear){
-        System.out.println("page: "+ page+
-                "\nbooks_per_page :" +booksPerPage+
-                "\nsort_by_year: "+isSortByYear);
        model.addAttribute("books", bookService.findAll(page, booksPerPage, isSortByYear));
         return "book/books";
     }
 
 
     @GetMapping("/{id}")
-    public String show(Model model, @PathVariable("id") int id){
+    public String show(Model model, @PathVariable("id") int id, @ModelAttribute("customer") Customer customer){
         model.addAttribute("book", bookService.findOne(id));
         model.addAttribute("customers", customerService.findAll());
         return "book/book";
@@ -69,8 +66,8 @@ public class BookController {
     }
 
     @PatchMapping("/{id}/assign")
-    public String assign(Book book, @PathVariable("id") int id){
-        bookService.assign(book);
+    public String assign(Customer customer, @PathVariable("id") int id){
+        bookService.assign(id, customer);
         return"redirect:/books/"+id;
     }
 
@@ -86,20 +83,16 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @GetMapping("/search")
-     public String search(Model model, @ModelAttribute("search")Search search){
-        if(search.getRequest()!=null){
-            search.setAnswer(true);
-            List<Book> books = bookService.findBooksStartWith(search.getRequest());
-            System.out.println("books: "+books
-            + "\nbooks.size: "+books.size());
-            if(books.size()==0) {
-                search.setAnswerEmpty(true);
-                System.out.println("answer is empty: " + search.isAnswerEmpty());
-            }
-            else
-                model.addAttribute("books", books);
+    @PostMapping("/search")
+     public String search(Model model, @RequestParam(name = "request", required = false)String request){
+        if(request!=null){
+            model.addAttribute("books", bookService.findBooksStartWith(request));
         }
+        return "book/search";
+    }
+
+    @GetMapping("/search")
+     public String searchPage(){
         return "book/search";
     }
 

@@ -30,9 +30,6 @@ public class Book {
     private Date assignAt;
 
     @Transient
-    private boolean isFree = true;
-
-    @Transient
     private int customerId;
 
     @Transient
@@ -81,13 +78,6 @@ public class Book {
         this.customer = customer;
     }
 
-    public boolean isFree() {
-        return isFree;
-    }
-
-    public void setFree(boolean free) {
-        isFree = free;
-    }
     public int getCustomerId() {
         return customerId;
     }

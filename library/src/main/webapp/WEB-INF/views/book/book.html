@@ -8,17 +8,17 @@
 <p th:text="${book.getTitle() + ', '
         + book.getAuthor() + ', '
         + book.getYear()}">book</p>
-    <form th:if="${book.isFree()}" th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}"  th:object="${book}" >
+    <form th:if="${book.getCustomer()==null}" th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}"   >
         <span>Эта книга свободна. Кому назначить её?</span>
         <br/>
         <label for="customer">Выберите человека </label>
-        <select th:object="${book}" th:field="*{customerId}" id="customer">
+        <select th:object="${customer}" th:field="*{id}" id="customer">
             <option th:each="customer : ${customers}" th:value="${customer.getId()}"
                     th:text="${customer.getName()}"></option>
         </select>
         <input type="submit" value="Назначить книгу"/>
     </form>
-    <form th:if="${not book.isFree()}" th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}"  th:object="${book}" >
+    <form th:if="${book.getCustomer()!=null}" th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}"  th:object="${book}" >
     <p th:text="${'Книга сейчас у: ' + book.getCustomer().getName()}"/>
         <input type="submit" value="Освободить книгу"/>
     </form>
