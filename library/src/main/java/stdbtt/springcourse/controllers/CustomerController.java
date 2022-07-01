@@ -4,58 +4,62 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import stdbtt.springcourse.dao.BookDAO;
-import stdbtt.springcourse.dao.CustomerDAO;
 import stdbtt.springcourse.models.Customer;
-
-import java.util.List;
+import stdbtt.springcourse.services.BookService;
+import stdbtt.springcourse.services.CustomerService;
 
 @Controller
-@RequestMapping("/library/customers")
+@RequestMapping("/customers")
 public class CustomerController {
-    private final BookDAO bookDAO;
-    private final CustomerDAO customerDAO;
+    private final CustomerService customerService;
+    private final BookService bookService;
 
     @Autowired
-    public CustomerController(BookDAO bookDAO, CustomerDAO customerDAO) {
-        this.bookDAO = bookDAO;
-        this.customerDAO = customerDAO;
+    public CustomerController(CustomerService customerService, BookService bookService) {
+        this.customerService = customerService;
+        this.bookService = bookService;
     }
 
     @GetMapping("")
-    public String customers(Model model){
-        List<Customer> customerList = customerDAO.showAll();
-        model.addAttribute("customers", customerDAO.showAll());
+    public String showAll(Model model){
+        model.addAttribute("customers", customerService.findAll());
         return "customer/customers";
     }
 
     @GetMapping("/{id}")
-    public String customerInfo(Model model, @PathVariable("id") int id){
-        model.addAttribute("customer", customerDAO.show(id));
-        model.addAttribute("books", bookDAO.showBooksForCustomerId(id));
+    public String show(Model model, @PathVariable("id") int id){
+        model.addAttribute("customer",customerService.findOne(id));
         return "customer/customer";
     }
 
     @GetMapping("/new")
     public String createForm(@ModelAttribute("customer") Customer customer){
-        return "customer/createCustomer";
+        return "customer/new";
     }
 
     @PostMapping("/new")
     public String create(Customer customer){
-        customerDAO.addCustomer(customer);
-        return "redirect:/library/customers";
+       customerService.save(customer);
+        return "redirect:/customers/";
     }
 
-    @GetMapping("/delete")
-    public String deleteForm(Model model, @ModelAttribute("customer") Customer customer){
-        model.addAttribute("customers", customerDAO.showAll());
-        return "customer/delete";
+    @GetMapping("/{id}/edit")
+    public String editForm(Model model, @PathVariable("id") int id){
+        model.addAttribute("customer",customerService.findOne(id));
+        return "/customer/edit";
     }
 
-    @PatchMapping("/delete")
+    @PatchMapping("/{id}")
+    public String edit(Customer customer, @PathVariable("id") int id){
+        customerService.update(customer);
+        return"redirect:/customers/"+id ;
+    }
+
+
+    @DeleteMapping("/{id}")
     public String delete(Customer customer){
-        customerDAO.deleteCustomer(customer);
-        return "redirect:/library/customers";
+        System.out.println(customer);
+       customerService.delete(customer);
+        return "redirect:/customers/";
     }
 }

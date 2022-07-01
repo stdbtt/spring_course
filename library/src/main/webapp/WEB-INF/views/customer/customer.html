@@ -2,30 +2,31 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Customer</title>
+    <title>Клиент</title>
 </head>
 <body>
-<p th:text="${'Name: ' + customer.getName()}">VALUE</p>
-<p th:text="${'Year of birth: ' + customer.getBirth()}">VALUE</p>
-<p>Books:</p>
-<br/>
-<table th:border="1">
-  <thead>
-  <tr>
-    <th> Title </th>
-    <th> Author </th>
-    <th> Year </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="book : ${books}" >
-    <td><span th:text="${book.getTitle()}"> Title </span></td>
-    <td><span th:text="${book.getAuthor()}"> Author </span></td>
-    <td><span th:text="${book.getYear()}"> Author </span></td>
-  </tr>
-  </tbody>
-</table>
+<p th:text="${customer.getName()+', '+ customer.getYearOfBirth()}">VALUE</p>
+<p th:if="${customer.isBooksEmpty()}">
+  Человек пока не взял ни одной книги
+</p>
+<div th:if="${not customer.isBooksEmpty()}">
+  <hr/>
+  <b><label>Книги:</label></b>
+  <p th:each="book : ${customer.getBooks()}">
+
+    <span th:style="${book.isTimeOff() ? 'background-color:red, color:white' : 'color:black'}" th:text="${book.getTitle() + ', '
+        + book.getAuthor() + ', '
+        + book.getYear()}">book</span>
+  </p>
+</div>
 <hr/>
-<a th:href="@{/library}">Back to main page</a>
+<form th:method="GET" th:action="@{/customers/{id}/edit(id=${customer.getId()})}" >
+    <input type="submit" value="Изменить данные человека"/>
+</form>
+<form th:method="DELETE" th:action="@{/customers/{id}(id=${customer.getId()})}" th:object="${customer}">
+    <input type="submit" value="Удалить человека"/>
+</form>
+<hr/>
+<a th:href="@{/customers}">К списку клиентов</a>
 </body>
 </html>

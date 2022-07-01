@@ -2,20 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Customers</title>
+    <title>Клиенты</title>
 </head>
 <body>
+<h2>Список клиентов:</h2>
+<br/>
 <div th:each="customer : ${customers}">
 
-    <a th:href="@{/library/customers/{id}(id=${customer.getCustomer_id()})}"
-       th:text="${customer.getName() + ', ' + customer.getBirth()}">user</a>
+    <a th:href="@{/customers/{id}(id=${customer.getId()})}"
+       th:text="${customer.getName() + ', ' + customer.getYearOfBirth()}">user</a>
 </div>
 <br/>
 <hr/>
-<a th:href="@{/library/customers/new}">Create customer</a>
-<br/>
-<a th:href="@{/library/customers/delete}">Delete customer</a>
+<form th:method="GET" th:action="@{/customers/new}" >
+    <input type="submit" value="Добавить человека"/>
+</form>
 <hr/>
-<a th:href="@{/library}">Back to main page</a>
+<a th:href="@{/books}">К списку книг</a>
 </body>
 </html>

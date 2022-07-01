@@ -1,16 +1,42 @@
 package stdbtt.springcourse.models;
 
-public class Customer {
-    private int customer_id;
-    private String name;
-    private int birth;
 
-    public int getCustomer_id() {
-        return customer_id;
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "customer")
+public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id")
+    private int id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "year_of_birth")
+    private int yearOfBirth;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Book> books;
+
+    @Transient
+    private boolean isBooksEmpty = true;
+
+
+
+    public Customer() {
+
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -21,11 +47,38 @@ public class Customer {
         this.name = name;
     }
 
-    public int getBirth() {
-        return birth;
+    public int getYearOfBirth() {
+        return yearOfBirth;
     }
 
-    public void setBirth(int birth) {
-        this.birth = birth;
+    public void setYearOfBirth(int yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    public boolean isBooksEmpty() {
+        return isBooksEmpty;
+    }
+
+    public void setBooksEmpty(boolean booksEmpty) {
+        isBooksEmpty = booksEmpty;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", yearOfBirth=" + yearOfBirth +
+                '}';
     }
 }
