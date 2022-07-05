@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
 </head>
 <body>
-Hello World Bitches!
+<h1>Hello World Bitches!</h1>
+<br/>
+<a th:href="@{/logout}" th:text="Выйти"></a>
 </body>
 </html>
