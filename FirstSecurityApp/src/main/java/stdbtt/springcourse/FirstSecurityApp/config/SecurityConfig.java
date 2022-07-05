@@ -7,33 +7,25 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import stdbtt.springcourse.FirstSecurityApp.security.AuthProviderImpl;
 import stdbtt.springcourse.FirstSecurityApp.services.PersonDetailsService;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AuthProviderImpl authProvider;
-
-    @Autowired
-    public SecurityConfig(AuthProviderImpl authProvider) {
-        this.authProvider = authProvider;
-    }
-
-   /* private final PersonDetailsService personDetailsService;
+    private final PersonDetailsService personDetailsService;
 
     @Autowired
     public SecurityConfig(PersonDetailsService personDetailsService) {
         this.personDetailsService = personDetailsService;
-    }*/
-
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authProvider);
     }
 
-    /*@Bean
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(personDetailsService);
+    }
+
+    @Bean
     public PasswordEncoder getPasswordEncoder(){
         return NoOpPasswordEncoder.getInstance();
-    }*/
+    }
 }
 
