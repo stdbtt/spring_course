@@ -23,6 +23,10 @@ public class RegistrationService {
     public void register(Person person){
         String hash = passwordEncoder.encode(person.getPassword());
         person.setPassword(hash);
+        if(!person.getUsername().equalsIgnoreCase("admin"))
+            person.setRole("ROLE_USER");
+        else
+            person.setRole("ROLE_ADMIN");
         peopleRepository.save(person);
     }
 }
