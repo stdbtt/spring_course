@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin Page</title>
 </head>
 <body>
-Yeah! You are admin!!!
+<p>Users:</p>
+<div th:each="person: ${users}">
+    <br/>
+    <span th:text="${person.getUsername()}"></span>
+</div>
+<hr/>
+<p>Admins:</p>
+<div th:each="person: ${admins}">
+    <br/>
+    <span th:text="${person.getUsername()}"></span>
+</div>
 </body>
 </html>
