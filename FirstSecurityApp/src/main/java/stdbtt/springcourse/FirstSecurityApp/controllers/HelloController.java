@@ -6,6 +6,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import stdbtt.springcourse.FirstSecurityApp.models.Person;
 import stdbtt.springcourse.FirstSecurityApp.security.PersonDetails;
 import stdbtt.springcourse.FirstSecurityApp.services.AdminService;
 
@@ -25,11 +27,11 @@ public class HelloController {
     }
 
     @GetMapping("/show")
-    public String showUserInfo(){
+    @ResponseBody
+    public Person showUserInfo(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails personDetails = (PersonDetails)authentication.getPrincipal();
-        System.out.println(personDetails.getPerson());
-        return "hello";
+        return personDetails.getPerson();
     }
 
     @GetMapping("/admin")
